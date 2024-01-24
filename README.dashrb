@@ -1,0 +1,13 @@
+## 
+## This repo has these upstreams:
+##      origin: github's official mail-in-a-box repo, frequently updated on branch main
+##              my local main branch reflects this official MIAB repo's main branch directly (no local changes)
+##      mmeidlinger: AWS guy's fork of the mail-in-a-box repo (at release v60.1), he made changes on branch aws
+##              my local aws branch reflects his changes only
+##      yoda: my local upstream, with these branches made by me:
+##              dashrb-test-v60.1: AWS guy forked at this point, I took origin/v60.1 and then git merge mmeidlinger/aws on top of it
+##              dashrb: Here, I intend to re-apply these aws changes on top of the latest origin MIAB main branch:
+##                  git checkout dashrb
+##                  git fetch origin
+##                  git rebase origin/main
+##
