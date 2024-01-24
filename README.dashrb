@@ -7,15 +7,20 @@
 ##      yoda: my local upstream, with these branches made by me:
 ##              dashrb-test-v60.1: AWS guy forked at this point, I took origin/v60.1 and then git merge mmeidlinger/aws on top of it
 ##              dashrb: Here, I intend to re-apply these aws changes on top of the latest origin MIAB main branch:
-##                  git checkout main
-##                  git pull origin
-##                  git push github
-##                  git checkout dashrb
-##                  git rebase origin/main
-##                  git push -f yoda dashrb
-##                  git push -f github dashrb
 ##      github: my dashrb fork of mailinabox. It has these branches:
 ##              dashrb: this is a copy of the dashrb branch, same as the yoda upstream.
 ##                      This is what I should "git clone" on the miab ec2 instance.
 ##              main: this is a fork of the official mailinabox repo, and this is their default branch.
+##
+##  Workflow:
+##      ##### First, pull down the official MIAB main branch, and push it to my github fork:
+##      git checkout main
+##      git pull origin
+##      git push github main
+##      ##### Now, update my local dashrb branch with the latest official main, and rebase my changes on top of it
+##      git checkout dashrb
+##      git rebase origin/main
+##      ##### Next, review the changes as neeeded, then push my updated branch to yoda and github (so my ec2 sees it)
+##      git push -f yoda dashrb
+##      git push -f github dashrb
 ##
