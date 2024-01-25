@@ -22,7 +22,7 @@
 ##      git rebase origin/main
 ##      ##### Next, review the changes as neeeded, then push my updated branch to yoda and github (so my ec2 sees it)
 ##      git push -f yoda dashrb
-##      git push -f github dashrb
+##      git push -f --tags github dashrb
 ##
 ##  pushd ~/git/cf.*
 ##  ./stack.py -c create -s alpha mailinabox.yml
