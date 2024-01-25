@@ -24,3 +24,6 @@
 ##      git push -f yoda dashrb
 ##      git push -f github dashrb
 ##
+##  pushd ~/git/cf.*
+##  ./stack.py -c create -s alpha mailinabox.yml
+##
