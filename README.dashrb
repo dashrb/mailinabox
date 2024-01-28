@@ -12,7 +12,7 @@
 ##                      This is what I should "git clone" on the miab ec2 instance.
 ##              main: this is a fork of the official mailinabox repo, and this is their default branch.
 ##
-##  Workflow:
+##  Workflow on development machine:
 ##      ##### First, pull down the official MIAB main branch, and push it to my github fork:
 ##      git checkout main
 ##      git pull origin
@@ -26,4 +26,28 @@
 ##
 ##  pushd ~/git/cf.*
 ##  ./stack.py -c create -s alpha mailinabox.yml
+##
+##
+############################
+##
+##  Workflow on operational/alpha EC2 instance:
+##      ##### First, pull down my current code from github, make sure to be on the dashrb branch
+##      sudo -i
+##      cd /opt/mailinabox
+##      echo Your currently running release of MiAB is:
+##      git describe --abbrev=0
+##      git fetch --depth 1 --force --prune origin
+##      git checkout dashrb
+##      echo Preparing to install the latest release:
+##      git describe --abbrev=0
+##
+##      ##### Check these parameters to see if any have been overwritten (from ~/git/cf.aws.dashrb.org/mailinabox.yml):
+##	/opt/mailinabox/tools/editconf.py /etc/postfix/main.cf recipient_delimiter=.+
+##	/opt/mailinabox/tools/editconf.py /etc/dovecot/conf.d/15-lda.conf recipient_delimiter=.+
+##	/opt/mailinabox/tools/editconf.py /etc/postfix/main.cf smtpd_sasl_auth_enable=yes
+##	/opt/mailinabox/tools/editconf.py /etc/postfix/main.cf sender_bcc_maps=hash:/etc/postfix/sender_bcc
+##	echo "parents@dashrb.org parents@dashrb.org" > /etc/postfix/sender_bcc
+##	echo "family@dashrb.org  family@dashrb.org" >> /etc/postfix/sender_bcc
+##	postmap /etc/postfix/sender_bcc
+##
 ##
