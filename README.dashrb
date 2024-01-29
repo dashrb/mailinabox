@@ -42,12 +42,15 @@
 ##      git describe --abbrev=0
 ##
 ##      ##### Check these parameters to see if any have been overwritten (from ~/git/cf.aws.dashrb.org/mailinabox.yml):
-##	/opt/mailinabox/tools/editconf.py /etc/postfix/main.cf recipient_delimiter=.+
-##	/opt/mailinabox/tools/editconf.py /etc/dovecot/conf.d/15-lda.conf recipient_delimiter=.+
-##	/opt/mailinabox/tools/editconf.py /etc/postfix/main.cf smtpd_sasl_auth_enable=yes
-##	/opt/mailinabox/tools/editconf.py /etc/postfix/main.cf sender_bcc_maps=hash:/etc/postfix/sender_bcc
-##	echo "parents@dashrb.org parents@dashrb.org" > /etc/postfix/sender_bcc
-##	echo "family@dashrb.org  family@dashrb.org" >> /etc/postfix/sender_bcc
-##	postmap /etc/postfix/sender_bcc
-##
+##      grep recipient_delimiter /etc/postfix/main.cf /etc/dovecot/conf.d/15-lda.conf
+##	    /opt/mailinabox/tools/editconf.py /etc/postfix/main.cf recipient_delimiter=.+
+##	    /opt/mailinabox/tools/editconf.py /etc/dovecot/conf.d/15-lda.conf recipient_delimiter=.+
+##      grep smtpd_sasl_auth_enable /etc/postfix/main.cf
+##	    /opt/mailinabox/tools/editconf.py /etc/postfix/main.cf smtpd_sasl_auth_enable=yes
+##      grep sender_bcc_maps /etc/postfix/main.cf
+##	    /opt/mailinabox/tools/editconf.py /etc/postfix/main.cf sender_bcc_maps=hash:/etc/postfix/sender_bcc
+##	    echo "parents@dashrb.org parents@dashrb.org" > /etc/postfix/sender_bcc
+##	    echo "family@dashrb.org  family@dashrb.org" >> /etc/postfix/sender_bcc
+##	    postmap /etc/postfix/sender_bcc
+##      service postfix reload
 ##
