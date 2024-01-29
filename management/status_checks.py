@@ -213,16 +213,28 @@ def check_ssh_password(env, output):
 	# the configuration file.
 	if not os.path.exists("/etc/ssh/sshd_config"):
 		return
-	with open("/etc/ssh/sshd_config", "r") as f:
-		sshd = f.read()
-	if re.search("\nPasswordAuthentication\s+yes", sshd) \
-		or not re.search("\nPasswordAuthentication\s+no", sshd):
-		output.print_error("""The SSH server on this machine permits password-based login. A more secure
-			way to log in is using a public key. Add your SSH public key to $HOME/.ssh/authorized_keys, check
-			that you can log in without a password, set the option 'PasswordAuthentication no' in
-			/etc/ssh/sshd_config, and then restart the openssh via 'sudo service ssh restart'.""")
-	else:
-		output.print_ok("SSH disallows password-based login.")
+	try:
+		sshdOutput = shell('check_output', ['sshd', '-T'])
+	except FileNotFoundError:
+		# sshd is not installed. That's ok.
+		return
+
+	inspectNext = False
+	for e in sshdOutput.split():
+		if inspectNext:
+			if e.lower() == "yes":
+				output.print_error("""The SSH server on this machine permits password-based login. A more secure
+					way to log in is using a public key. Add your SSH public key to $HOME/.ssh/authorized_keys, check
+					that you can log in without a password, set the option 'PasswordAuthentication no' in
+					/etc/ssh/sshd_config, and then restart the openssh via 'sudo service ssh restart'.""")
+			else:
+				output.print_ok("SSH disallows password-based login.")
+			return
+		if e.lower() == "passwordauthentication":
+			inspectNext = True
+
+	# Did not find passwordauthentication setting
+	return
 
 def is_reboot_needed_due_to_package_installation():
 	return os.path.exists("/var/run/reboot-required")
